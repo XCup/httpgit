@@ -34,7 +34,7 @@ class indexHandler(tornado.web.RequestHandler):
 
         # 提交本地版本库
         def commit():
-            archiveCmd = "git commit -m message "
+            archiveCmd = "git commit -m "+message
             process = subprocess.Popen(archiveCmd, shell=True)
             process.wait()
             archiveReturnCode = process.returncode
