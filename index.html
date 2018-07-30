@@ -18,26 +18,27 @@
 <form action="http://localhost:8889/pull" method="post">
     <input type="submit" value="拉取">
 </form>
-<script type="text/javascript">
-  function submitrate() {
-        $.ajax({
-            url: "http://localhost:8889/push",
-            type: "POST",
-            processData: false,
-            async: true,
-            data: $("#formpush").serialize(),
-            error: function () {
-                alert("保存失败");
-            },
-            success: function (data, textStatus) {
-                if (data < 0) {
-                    alert("保存失败");
-                }
-                else alert("保存成功");
-<!--123-->
-            },
-        });
-    }
-</script>
+
+<!--<script type="text/javascript">-->
+  <!--function submitrate() {-->
+        <!--$.ajax({-->
+            <!--url: "http://localhost:8889/push",-->
+            <!--type: "POST",-->
+            <!--processData: false,-->
+            <!--async: true,-->
+            <!--data: $("#formpush").serialize(),-->
+            <!--error: function () {-->
+                <!--alert("保存失败");-->
+            <!--},-->
+            <!--success: function (data, textStatus) {-->
+                <!--if (data < 0) {-->
+                    <!--alert("保存失败");-->
+                <!--}-->
+                <!--else alert("保存成功");-->
+<!--&lt;!&ndash;123&ndash;&gt;-->
+            <!--},-->
+        <!--});-->
+    <!--}-->
+<!--</script>-->
 </body>
 </html>
