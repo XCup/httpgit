@@ -22,13 +22,13 @@
 <script type="text/javascript">
   function submitrate() {
         $.ajax({
-            url: "http://localhost:8889/push",
+            url: "index.html",
             type: "POST",
             processData: false,
             async: true,
             data: $("#formpush").serialize(),
             error: function () {
-                alert("保存失败");
+                alert("push失败");
             },
             success: function (message) {
                 alert("message")
