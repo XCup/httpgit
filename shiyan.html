@@ -2,43 +2,49 @@
 <head>
     <meta charset="UTF-8">
 <script type="text/javascript">
-function loadXMLDoc()
-{
-var xmlhttp;
-var txt,x,i;
-if (window.XMLHttpRequest)
-  {// code for IE7+, Firefox, Chrome, Opera, Safari
-  xmlhttp=new XMLHttpRequest();
-  }
-else
-  {// code for IE6, IE5
-  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-  }
-xmlhttp.onreadystatechange=function()
-  {
-  if (xmlhttp.readyState==4 && xmlhttp.status==200)
-    {
-    xmlDoc=xmlhttp.responseXML;
-    txt="";
-    x=xmlDoc.getElementsByTagName("title");
-    for (i=0;i<x.length;i++)
-      {
-      txt=txt + x[i].childNodes[0].nodeValue + "<br />";
-      }
-    document.getElementById("myDiv").innerHTML=txt;
+    function submitrate() { //提交表单
+        $.ajax({
+            url: "rate",
+            type: "POST",
+            processData: false,
+            async: false,
+            data: $("#rateForm").serialize(),
+            error: function () {
+                alert("保存失败");
+
+
+            },
+            success: function (data, textStatus) {
+                if (data < 0) alert("保存失败");
+                else alert("保存成功");
+
+            },
+        });
     }
-  }
-xmlhttp.open("GET","/learngit/books.xml",true);
-xmlhttp.send();
-}
 </script>
-</head>
 
+
+
+ <form id="rateForm" method="post"  action="newrate">
+        <table class="table1" border="1">
+            <tr>
+                <td class="td11"></td>
+
+            </tr>
+            <tr>
+                <td class="td13">
+                    平时<input name="pingshi" id="pingshi" class="textbox1" type="text" value="50"
+                             onchange="zhanbi($(this), $('#zuizhong'))"/>%
+                    最终<input name="zuizhong" id="zuizhong" class="textbox1" type="text" value="50"
+                             onchange="zhanbi($(this), $('#pingshi'))"/>%
+
+            <button  name="saverate" id="saverate" onclick="submitrate()">保存</button>
+                </td>
+
+            </tr>
+        </table>
+ </form>
 <body>
-
-<h2>My Book Collection:</h2>
-<div id="myDiv"></div>
-<button type="button" onclick="loadXMLDoc()">获得我的图书收藏列表</button>
 
 </body>
 </html>
