@@ -32,7 +32,9 @@
 
             },
             success: function (data, textStatus) {
-                if (data < 0) alert("保存失败");
+                if (data < 0) {
+                    alert("保存失败");
+                }
                 else alert("保存成功");
 
             },
