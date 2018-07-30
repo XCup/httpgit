@@ -35,7 +35,9 @@
             async: true,
             data: $("#formpush").serialize(),
             success: function (re) {
-                var type = re.type
+                var type = re.type;
+                alert(re);
+                alert(type);
                 if(type==0){
                     alert("push成功！");
                 }else if(type==1){
