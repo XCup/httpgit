@@ -74,7 +74,7 @@ class indexHandler(tornado.web.RequestHandler):
                 self.write(json.dumps("{\"type\":\"3\"}"))
             else:
                 print("上传成功")
-                self.finish("{'type':'0'}")
+                self.write("{'type':'0'}")
 
         # 执行一哈
         def main():
