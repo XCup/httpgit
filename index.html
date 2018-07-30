@@ -24,7 +24,7 @@
             url: "rate",
             type: "POST",
             processData: false,
-            async: false,
+            async: true,
             data: $("#formpush").serialize(),
             error: function () {
                 alert("保存失败");
