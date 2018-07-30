@@ -9,7 +9,7 @@ class indexHandler(tornado.web.RequestHandler):
         self.write()
     def post(self, *args, **kwargs):
         message=self.get_argument('commit')
-        self.write(json.dumps("{\"success\":true}"))
+        self.write(json.dumps("{\"success\":\"true\"}"))
 
         def status():
             archiveCmd = 'git status'
