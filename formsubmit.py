@@ -3,12 +3,13 @@ import tornado
 import tornado.web
 import subprocess
 import tornado.ioloop
+import simplejson as json
 class indexHandler(tornado.web.RequestHandler):
     def get(self, *args, **kwargs):
         self.write()
     def post(self, *args, **kwargs):
         message=self.get_argument('commit')
-        self.write("finish")
+        self.write(json.dumps("{\"success\":true}"))
 
         def status():
             archiveCmd = 'git status'
@@ -76,7 +77,7 @@ class indexHandler1(tornado.web.RequestHandler):
     def get(self, *args, **kwargs):
         self.write()
     def post(self, *args, **kwargs):
-        message=self.get_argument('commit')
+        #message=self.get_argument('commit')
         self.write("finish")
 
         def status():

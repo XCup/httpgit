@@ -10,7 +10,7 @@
 
 <body>
 <p>这里是push</p>
-<form action="http://localhost:8889/push" method="post" id="pushform">
+<form id = "formp110ush" action="http://localhost:8889/push" method="post" id="pushform">
     <input type="text" placeholder="commit -m" name="commit" id="message">
     <input type="submit">
 </form>
@@ -18,32 +18,30 @@
 <form action="http://localhost:8889/pull" method="post">
     <input type="submit" value="拉取">
 </form>
-<script>
-$(document).ready(function () {
-    $("#pushform").submit(function(){
-                ajaxSubmit();//提交登录信息
+<!--123-->
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#formpush").submit(function(){
+                submitrate();//提交登录信息
                 return false;
             });
-}
-
-function ajaxSubmit() {
-
-            var logindata=getLoginFormData();
-            var data={
-                commit:logindata.message
-            };
-            alert(data);
-
-        }
-
-        function getLoginFormData() {
-            var data1={
-                message:$("#useremail").val()
+    });
+  function submitrate() {
+        $.ajax({
+            url: "http://localhost:8889/push",
+            type: "POST",
+            processData: false,
+            async: true,
+            data: $("#formpush").serialize(),//123
+            success: function (message) {
+                alert("提交成功！");
+            },
+            error: function() {
+                alert("push失败");
             }
 
-            return data1;
-        }
+        });
+    };
 </script>
 </body>
-<!--sdasd-->
 </html>
