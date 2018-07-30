@@ -19,26 +19,22 @@
     <input type="submit" value="拉取">
 </form>
 
-<!--<script type="text/javascript">-->
-  <!--function submitrate() {-->
-        <!--$.ajax({-->
-            <!--url: "http://localhost:8889/push",-->
-            <!--type: "POST",-->
-            <!--processData: false,-->
-            <!--async: true,-->
-            <!--data: $("#formpush").serialize(),-->
-            <!--error: function () {-->
-                <!--alert("保存失败");-->
-            <!--},-->
-            <!--success: function (data, textStatus) {-->
-                <!--if (data < 0) {-->
-                    <!--alert("保存失败");-->
-                <!--}-->
-                <!--else alert("保存成功");-->
-<!--&lt;!&ndash;123&ndash;&gt;-->
-            <!--},-->
-        <!--});-->
-    <!--}-->
-<!--</script>-->
+<script type="text/javascript">
+  function submitrate() {
+        $.ajax({
+            url: "http://localhost:8889/push",
+            type: "POST",
+            processData: false,
+            async: true,
+            data: $("#formpush").serialize(),
+            error: function () {
+                alert("保存失败");
+            },
+            success: function (message) {
+                alert("message")
+            },
+        });
+    }
+</script>
 </body>
 </html>
