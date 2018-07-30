@@ -31,10 +31,10 @@
             url: "http://localhost:8889/push",
             type: "POST",
             processData: false,
-            dataType: "json",
+            dataType: "text",
             async: true,
             data: $("#formpush").serialize(),
-            success: function (message) {
+            success: function () {
                 alert("提交成功！");
             },
             error: function() {
