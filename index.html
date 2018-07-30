@@ -34,8 +34,8 @@
             dataType: "json",
             async: true,
             data: $("#formpush").serialize(),
-            success: function (type) {
-                alert(type);
+            success: function (re) {
+                var type = re.type
                 if(type==0){
                     alert("push成功！");
                 }else if(type==1){
