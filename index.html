@@ -10,7 +10,7 @@
 
 <body>
 <p>这里是push</p>
-<form id = "rateForm" action="http://localhost:8889/push" method="post" id="pushform">
+<form id = "formpush" action="http://localhost:8889/push" method="post" id="pushform">
     <input type="text" placeholder="commit -m" name="commit" id="message">
     <input type="submit">
 </form>
@@ -19,17 +19,15 @@
     <input type="submit" value="拉取">
 </form>
 <script type="text/javascript">
-  function submitrate() { //提交表单
+  function submitrate() {
         $.ajax({
             url: "rate",
             type: "POST",
             processData: false,
             async: false,
-            data: $("#rateForm").serialize(),
+            data: $("#formpush").serialize(),
             error: function () {
                 alert("保存失败");
-<!--21-->
-
             },
             success: function (data, textStatus) {
                 if (data < 0) {
