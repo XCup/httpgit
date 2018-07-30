@@ -13,8 +13,9 @@ class indexHandler(tornado.web.RequestHandler):
     def get(self, *args, **kwargs):
         self.write()
     def post(self, *args, **kwargs):
+        type = 233
         message=self.get_argument('commit')
-        self.write(json.dumps("{\"success\":\"true\"}"))
+
 
         def status():
             archiveCmd = 'git status'
@@ -46,6 +47,7 @@ class indexHandler(tornado.web.RequestHandler):
             archiveReturnCode = process.returncode
             if archiveReturnCode != 0:
                 print("提交失败")
+                type=1
             else:
                 print("提交成功"), message
                 pull()
@@ -58,6 +60,7 @@ class indexHandler(tornado.web.RequestHandler):
             archiveReturnCode = process.returncode
             if archiveReturnCode != 0:
                 print("拉取远程代码失败")
+                type=2
             else:
                 push()
 
@@ -69,8 +72,10 @@ class indexHandler(tornado.web.RequestHandler):
             archiveReturnCode = process.returncode
             if archiveReturnCode != 0:
                 print("上传远程git服务器失败")
+                type=3
             else:
                 print("上传成功")
+                type=0
 
         # 执行一哈
         def main():
@@ -78,6 +83,7 @@ class indexHandler(tornado.web.RequestHandler):
 
         if __name__ == '__main__':
             main()
+        self.write(json.dumps("{\"type\":\"" + type + "\"}"))
     def options(self):
         # no body
         self.set_status(204)

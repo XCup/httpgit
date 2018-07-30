@@ -34,8 +34,18 @@
             dataType: "json",
             async: true,
             data: $("#formpush").serialize(),
-            success: function () {
-                alert("提交成功！");
+            success: function (data1) {
+                if(data1.type==0){
+                    alert("push成功！");
+                }else if(data1.type==1){
+                    alert("提交失败");
+                }else if(data1.type==2){
+                    alert("拉取git仓库失败");
+                }else if(data1.type==3){
+                    alert("上传失败");
+                }else{
+                    alert("服务器内部错误");
+                }
             },
             error: function() {
                 alert("push失败");
