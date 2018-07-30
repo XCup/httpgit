@@ -24,6 +24,11 @@ class BaseHandler(tornado.web.RequestHandler):
         self.finish()
 
 class indexHandler(tornado.web.RequestHandler):
+    def set_default_headers(self):
+        print("setting headers!!!")
+        self.set_header("Access-Control-Allow-Origin", "*") # 这个地方可以写域名
+        self.set_header("Access-Control-Allow-Headers", "x-requested-with")
+        self.set_header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
     def get(self, *args, **kwargs):
         self.write()
     def post(self, *args, **kwargs):
@@ -92,6 +97,10 @@ class indexHandler(tornado.web.RequestHandler):
 
         if __name__ == '__main__':
             main()
+    def options(self):
+        # no body
+        self.set_status(204)
+        self.finish()
 class indexHandler1(tornado.web.RequestHandler):
     def get(self, *args, **kwargs):
         self.write()
