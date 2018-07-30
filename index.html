@@ -20,9 +20,15 @@
 </form>
 <!--123-->
 <script type="text/javascript">
+    $(document).ready(function () {
+        $("#formpush").submit(function(){
+                submitrate();//提交登录信息
+                return false;
+            });
+    });
   function submitrate() {
         $.ajax({
-            url: "index.html",
+            url: "http://localhost:8889/push",
             type: "POST",
             processData: false,
             async: true,
@@ -31,7 +37,7 @@
                 alert("push失败");
             },
             success: function (message) {
-                alert(message);
+                alert("提交成功！");
             }
         });
     };
