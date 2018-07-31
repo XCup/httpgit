@@ -24,6 +24,9 @@ class indexHandler(tornado.web.RequestHandler):
             archiveReturnCode = process.returncode
             if archiveReturnCode != 0:
                 print("查看工作区状态错误")
+                self.set_header('Content-Type', 'application/json; charset=UTF-8')
+                self.write(json.dumps({'type': 1}))
+                self.finish()
             else:
                 add()
 
@@ -36,6 +39,9 @@ class indexHandler(tornado.web.RequestHandler):
             archiveReturnCode = process.returncode
             if archiveReturnCode != 0:
                 print("添加到缓存区错误")
+                self.set_header('Content-Type', 'application/json; charset=UTF-8')
+                self.write(json.dumps({'type': 2}))
+                self.finish()
             else:
                 commit()
 
@@ -47,7 +53,8 @@ class indexHandler(tornado.web.RequestHandler):
             archiveReturnCode = process.returncode
             if archiveReturnCode != 0:
                 print("提交失败")
-                type=1
+                self.set_header('Content-Type', 'application/json; charset=UTF-8')
+                self.write(json.dumps({'type': 3}))
             else:
                 print("提交成功"), message
                 pull()
@@ -60,7 +67,9 @@ class indexHandler(tornado.web.RequestHandler):
             archiveReturnCode = process.returncode
             if archiveReturnCode != 0:
                 print("拉取远程代码失败")
-                type=2
+                self.set_header('Content-Type', 'application/json; charset=UTF-8')
+                self.write(json.dumps({'type': 4}))
+                self.finish()
             else:
                 push()
 
@@ -72,14 +81,13 @@ class indexHandler(tornado.web.RequestHandler):
             archiveReturnCode = process.returncode
             if archiveReturnCode != 0:
                 print("上传远程git服务器失败")
-                type=3
                 self.set_header('Content-Type', 'application/json; charset=UTF-8')
-                self.write(json.dumps({'type': type1}))
+                self.write(json.dumps({'type': 5}))
                 self.finish()
             else:
                 print("上传成功")
                 self.set_header('Content-Type', 'application/json; charset=UTF-8')
-                self.write(json.dumps({'type': type1}))
+                self.write(json.dumps({'type': 0}))
                 self.finish()
 
         # 执行一哈
