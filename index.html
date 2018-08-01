@@ -31,14 +31,32 @@
             url: "http://localhost:8889/push",
             type: "POST",
             processData: false,
+            dataType: "json",
             async: true,
-            data: $("#formpush").serialize(),//123
+            data: $("#formpush").serialize(),
+            success: function (re) {
+                var type=re.type;
+                if(type==0){
+                    alert("push成功！");
+                }else if(type==1){
+                    alert("查看工作区状态错误");
+                }else if(type==2){
+                    alert("添加到缓存区错误");
+                }else if(type==3){
+                    alert("提交失败");
+                }else if(type==4){
+                     alert("拉取git仓库失败");
+                }else if(type==5){
+                     alert("上传失败");
+                }
+                else{
+                    alert("服务器内部错误");
+                }
+            },
             error: function() {
                 alert("push失败");
-            },
-            success: function (message) {
-                alert("提交成功！");
             }
+<!--12-->
         });
     };
 </script>
