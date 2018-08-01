@@ -102,6 +102,11 @@ class indexHandler(tornado.web.RequestHandler):
         self.set_status(204)
         self.finish()
 class indexHandler1(tornado.web.RequestHandler):
+    def set_default_headers(self):
+        print("setting headers!!!")
+        self.set_header("Access-Control-Allow-Origin", "*")  # 这个地方可以写域名
+        self.set_header("Access-Control-Allow-Headers", "x-requested-with")
+        self.set_header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
     def get(self, *args, **kwargs):
         self.write()
     def post(self, *args, **kwargs):
@@ -128,6 +133,9 @@ class indexHandler1(tornado.web.RequestHandler):
             archiveReturnCode = process.returncode
             if archiveReturnCode != 0:
                 print("拉取远程代码失败")
+                self.set_header('Content-Type', 'application/json; charset=UTF-8')
+                self.write(json.dumps({'type': 4}))
+                self.finish()
             else:
                 print("拉取成功")
 
