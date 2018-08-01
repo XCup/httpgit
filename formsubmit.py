@@ -14,7 +14,7 @@ class indexHandler(tornado.web.RequestHandler):
         self.write()
     def post(self, *args, **kwargs):
         message=self.get_argument('commit')
-        type1 = 233
+        type = 233
 
 
         def status():
@@ -111,7 +111,7 @@ class indexHandler1(tornado.web.RequestHandler):
         self.write()
     def post(self, *args, **kwargs):
         #message=self.get_argument('commit')
-        self.write("finish")
+
 
         def status():
             archiveCmd = 'git status'
@@ -120,6 +120,9 @@ class indexHandler1(tornado.web.RequestHandler):
             archiveReturnCode = process.returncode
             if archiveReturnCode != 0:
                 print("查看工作区状态错误")
+                self.set_header('Content-Type', 'application/json; charset=UTF-8')
+                self.write(json.dumps({'type': 0}))
+                self.finish()
             else:
                 pull()
 
@@ -138,6 +141,9 @@ class indexHandler1(tornado.web.RequestHandler):
                 self.finish()
             else:
                 print("拉取成功")
+                self.set_header('Content-Type', 'application/json; charset=UTF-8')
+                self.write(json.dumps({'type':0}))
+                self.finish()
 
 
         def main():

@@ -25,6 +25,10 @@
                 submitrate();//提交登录信息
                 return false;
             });
+        $("#formpull").submit(function(){
+                submitpull();//提交登录信息
+                return false;
+            });
     });
   function submitrate() {
         $.ajax({
@@ -56,10 +60,10 @@
             error: function() {
                 alert("push失败");
             }
-<!--12-->
+
         });
     };
-  function submitratepull() {
+  function submitpull() {
         $.ajax({
             url: "http://localhost:8889/pull",
             type: "POST",
@@ -69,16 +73,20 @@
             data: $("#formpush").serialize(),
             success: function (re) {
                 var type=re.type;
-                if(type==4){
-                     alert("拉取git仓库失败");
-
+                if(type==0){
+                    alert("pull成功！");
+                }
+                else if(type==1){
+                    alert("查看工作区状态错误");
+                }
+                else if(type==4) {
+                    alert("拉取git仓库失败");
+                }
                 else{
                     alert("服务器内部错误");
                 }
-            }
+            },
             error: function pull() {
-
-            } {
                 alert("pull失败");
             }
         });
