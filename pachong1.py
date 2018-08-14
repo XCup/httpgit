@@ -9,7 +9,9 @@ find = str(soup.find_all('span'))
 #print(find)
 key = find
 p1 = r"(?<=title=\").*?(?=\">)"
-pattern1 = re.compile(p1)
-matcher1 = re.search(pattern1,key)
-print(matcher1.group())
+pattern1 = re.findall('(?<=title=\").*?(?=\">)',key,re.S)
+#pattern1 = re.compile(p1)
+#matcher1 = re.search(pattern1,key)
+#print(matcher1.group())
 #(?<=<h1>).+?(?=<h1>)
+print(pattern1)
