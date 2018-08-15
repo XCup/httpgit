@@ -109,7 +109,6 @@ class indexHandler(tornado.web.RequestHandler):
         # pattern1 = re.compile(p1)
         # matcher1 = re.search(pattern1,key)
         # print(matcher1.group())
-        # (?<=<h1>).+?(?=<h1>)
         print(pattern1)
 
         if __name__ == '__main__':
