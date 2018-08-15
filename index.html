@@ -9,17 +9,34 @@
 </head>
 
 <body>
-<table id="filename"
+
 <p>这里是push</p>
 <form id = "formpush" action="http://localhost:8889/push" method="post" id="pushform">
     <input type="text" placeholder="commit -m" name="commit" id="message">
-    <input type="submit">
+    <input type="submit" id="push" value="提交">
 </form>
+<table id="filename" border="1">
+    <tr>
+        <th>file</th>
+        <th>-m</th>
+    </tr>
+    <te>
+        <th></th>
+        <th></th>
+    </te>
+</table>
 <p>这里是pull</p>
 <form id="formpull" action="http://localhost:8889/pull" method="post">
     <input type="submit" value="拉取">
 </form>
 <!--123-->
+<script type="text/javascript">
+$(document).ready(function(){
+  $("push").click(function(){
+    $("p").hide();
+  });
+});
+</script>
 <script type="text/javascript">
     $(document).ready(function () {
         $("#formpush").submit(function(){
