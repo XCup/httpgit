@@ -4,6 +4,9 @@ import tornado.web
 import subprocess
 import tornado.ioloop
 import simplejson as json
+import requests
+import re
+from bs4 import BeautifulSoup
 class indexHandler(tornado.web.RequestHandler):
     def set_default_headers(self):
         print("setting headers!!!")
@@ -93,6 +96,21 @@ class indexHandler(tornado.web.RequestHandler):
         # 执行一哈
         def main():
             status()
+
+        r = requests.get('https://github.com/XCup/gitpushscript')
+        # print(r.text)
+
+        soup = BeautifulSoup(r.text, 'lxml')
+        find = str(soup.find_all('span'))
+        # print(find)
+        key = find
+        p1 = r"(?<=title=\").*?(?=\">)"
+        pattern1 = re.findall('(?<=title=\").*?(?=\">)', key, re.S)
+        # pattern1 = re.compile(p1)
+        # matcher1 = re.search(pattern1,key)
+        # print(matcher1.group())
+        # (?<=<h1>).+?(?=<h1>)
+        print(pattern1)
 
         if __name__ == '__main__':
             main()
