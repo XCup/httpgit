@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <script src="jquery-3.3.1.min.js"></script>
+    <script src="jquery-3.3.1.js"></script>
+</head>
+<body>
+
+<h1>注册</h1>
+
+
+<form method="post" id = "register">
+    <p>用户名<br><input type="text" name="username"></p>
+    <p>密码<br><input type="password" id = "pwd1" name="passwd1"></p>
+    <p>再次输入密码<br><input type="password" id = "pwd2" onchange= "checkpwd(this);" name="passwd2"></p>
+    <div id="tishi" style="color:red;visibility:hidden;">两次密码不一致!</div>
+    <input type="submit">
+</form>
+<script>
+function checkpwd(inp)
+{
+    var pwd = document.getElementById("pwd1");
+    var div1 = document.getElementById("tishi");
+    if(inp.value!=pwd.value){
+        div1.style.visibility = "visible";
+        inp.focus();
+    }
+    else
+        div1.style.visibility= "hidden";
+}
+$(document).ready(function ()
+{
+        $("#register").submit(function(){
+                submitrate();//提交登录信息
+
+                return false;
+            });
+
+});
+  function submitrate() {
+        $.ajax({
+            url: "http://localhost:8888/register",
+            type: "POST",
+            processData: false,
+            dataType: "json",
+            async: true,
+            data: $("#register").serialize(),
+            success: function (re) {
+                var type=re.type;
+                if(type==0){
+                    alert("注册成功！");
+
+                    }
+                if(type==1){
+                    alert("用户名已被注册！");
+                }
+                else{
+                    alert("服务器内部错误");
+                }
+            },
+            error: function() {
+                alert("网络错误");
+            }
+        });
+}
+</script>
+</body>
+</html>
