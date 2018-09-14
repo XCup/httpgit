@@ -164,11 +164,7 @@ class indexHandler1(tornado.web.RequestHandler):
                 self.write(json.dumps({'type':0}))
                 self.finish()
 
-<<<<<<< HEAD
 # ad
-=======
-
->>>>>>> 79d6a477cdaf6ace01063f6a4412dd7d8bb10d22
         def main():
             status()
 
