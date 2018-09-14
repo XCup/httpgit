@@ -1,6 +1,7 @@
 import tornado
 import tornado.web
 import tornado.ioloop
+import demjson
 import mysqlPy,asyncio
 from models import entity
 class MainHandler(tornado.web.RequestHandler):
@@ -8,11 +9,22 @@ class MainHandler(tornado.web.RequestHandler):
         self.write("hello")
     def post(self, *args, **kwargs):
         message=self.get_argument('commit')
-        type = 233
+        data1 = self.get_argument('name[]')
+        data2 = self.get_argument('length[]')
+        data3 = self.get_argument('type[]')
+        data4 = self.get_argument('desc[]')
+        fields = [{"name":data1,"length":data2,"type":data3,"desc":data4}]
+        u1 = {"table":message,"fields":fields}
+        u = str(u1)
+        json = demjson.encode(u)
+        print(u)
+        print(u1)
+        print(json)
+
         async def test(loop):
-            await mysqlPy.create_pool(loop,user='bm',password='bm!@#123',db='dev')
-            u = entity(data=message)
-            await u.save()
+            await mysqlPy.create_pool(loop,user='bm',password='bm!@#123',db="dev" )
+            fin = entity(data = json)
+            await fin.save()
 
 
         loop = asyncio.get_event_loop()
