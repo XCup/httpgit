@@ -164,7 +164,7 @@ class indexHandler1(tornado.web.RequestHandler):
                 self.write(json.dumps({'type':0}))
                 self.finish()
 
-# ad
+        # ad
         def main():
             status()
 

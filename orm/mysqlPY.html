@@ -40,4 +40,24 @@ function exec1(command) {
             <a href="javascript:addFieldInfo();" >添加字段</a>
         </form>
     </center>
+    <form action = http://localhost:8887/read method="post" id="readList">
+        <input type="submit" id="read" value="读取列表">
+        <table id="filename" border="1">
+            <tr>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+    </form>
+
+<script>
+    for(var i=0;i<filename.length-1;i=i+2){
+        var nr = "<tr>\n" +
+            "        <td>"+filename[i]+"</td>\n" +
+            "        <td>"+filename[i+1]+"</td>\n" +
+            "     </tr>";
+        $("#filename").append(nr);
+    }
+</script>
 </body>
+</html>
