@@ -52,7 +52,7 @@ class SelectHandler(tornado.web.RequestHandler):
             print ("Error: unable to fetch data")
         db.close ()        # 关闭数据库连接
         self.set_header ('Content-Type', 'application/json; charset=UTF-8')
-        self.write (json.dumps ({ 'entity': results}))
+        self.write (json.dumps ({ 'type': 1,'entity': results}))
         self.finish ()
 if __name__ == '__main__':
     app = tornado.web.Application ([

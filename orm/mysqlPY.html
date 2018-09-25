@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>测试orm</title>
+    <script src="../jquery-3.3.1.min.js"></script>
+    <script src="../jquery-3.3.1.js"></script>
 </head>
 <style>.inputdiv{display: inline-block; margin-right: 40px;}</style>
+
 <script type='text/javascript' src='http://s.dev.000room.com/js/jquery-2.1.1.min.js'></script>
 <script type="text/javascript">
 
@@ -42,22 +45,58 @@ function exec1(command) {
     </center>
     <form action = http://localhost:8887/read method="post" id="readList">
         <input type="submit" id="read" value="读取列表">
-        <table id="filename" border="1">
-            <tr>
-                <td></td>
-                <td></td>
-            </tr>
-        </table>
     </form>
+    <table id="filename" border="1">
+        <tr>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
 
 <script>
-    for(var i=0;i<filename.length-1;i=i+2){
-        var nr = "<tr>\n" +
-            "        <td>"+filename[i]+"</td>\n" +
-            "        <td>"+filename[i+1]+"</td>\n" +
-            "     </tr>";
-        $("#filename").append(nr);
-    }
+    $(document).ready(function(){
+  $("read").click(function(){
+    $("p").hide();
+  });
+});
+    $(document).ready(function () {
+        $("#ormForm").submit(function(){
+                submitrate();//提交登录信息
+                return false;
+            });
+    });
+  function submitrate() {
+        $.ajax({
+            url: "http://localhost:8889/read",
+            type: "POST",
+            processData: false,
+            dataType: "json",
+            async: true,
+            data: $("#formpush").serialize(),
+            success: function (re) {
+                var type=re.type;
+                if(type==0){
+                    alert("push成功！");
+                    alert(re.filename);
+                    for(var i=0;i<re.filename.length-1;i=i+2){
+                        var nr = "<tr>\n" +
+                            "        <td>"+re.filename[i]+"</td>\n" +
+                            "        <td>"+re.filename[i+1]+"</td>\n" +
+                            "     </tr>";
+                        $("#filename").append(nr);
+                    }
+                }else if(type==1){
+                    alert("成功");
+                }
+                else{
+                    alert("服务器内部错误");
+                }
+            },
+            error: function() {
+                alert("read失败");
+            }
+        });
+    };
 </script>
 </body>
 </html>
