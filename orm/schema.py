@@ -47,8 +47,8 @@ class SelectHandler(tornado.web.RequestHandler):
         cursor = db.cursor ()# 使用cursor()方法获取操作游标
         sql = "SELECT COLUMN_NAME 列名,COLUMN_TYPE 数据类型,DATA_TYPE 字段类型,CHARACTER_MAXIMUM_LENGTH 长度,IS_NULLABLE 是否为空,COLUMN_DEFAULT 默认值,COLUMN_COMMENT 备注 FROM INFORMATION_SCHEMA.COLUMNS where table_name  = 'entity' "
         try:
-            cursor.execute (sql)            # 执行SQL语句
-            results = cursor.fetchall ()            # 获取所有记录列表
+            cursor.execute(sql)            # 执行SQL语句
+            results = cursor.fetchall()          # 获取所有记录列表
             print (results)
         except:
             print ("Error: unable to fetch data")

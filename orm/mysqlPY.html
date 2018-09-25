@@ -7,7 +7,6 @@
     <script src="../jquery-3.3.1.min.js"></script>
 </head>
 <style>.inputdiv{display: inline-block; margin-right: 40px;}</style>
-<script type='text/javascript' src='http://s.dev.000room.com/js/jquery-2.1.1.min.js'></script>
 <script type="text/javascript">
 function addFieldInfo()
 {
@@ -66,7 +65,7 @@ function exec1(command) {
       });
     });
     $(document).ready(function () {
-        $("#ormForm").submit(function(){
+        $("#readList").submit(function(){
                 submitrate();//提交登录信息
                 return false;
             });
@@ -78,24 +77,24 @@ function exec1(command) {
             processData: false,
             dataType: "json",
             async: true,
-            data: $("#ormForm").serialize(),
+            data: $("#results").serialize(),
             success: function (re) {
                 var type=re.type;
                 if(type==1){
                     alert("read成功！");
                     alert(re.results);
-                    for(var i=0;i<re.results.length;i=i+7){
-                        var nr = "<tr>\n" +
-                            "        <td>"+re.results[i]+"</td>\n" +
-                            "        <td>"+re.results[i+1]+"</td>\n" +
-                            "        <td>"+re.results[i+2]+"</td>\n" +
-                            "        <td>"+re.results[i+3]+"</td>\n" +
-                            "        <td>"+re.results[i+4]+"</td>\n" +
-                            "        <td>"+re.results[i+5]+"</td>\n" +
-                            "        <td>"+re.results[i+6]+"</td>\n" +
-                            "     </tr>";
-                        $("#results").append(nr);
-                    }
+                    // for(var i=0;i<re.results.length;i=i+7){
+                    //     var nr = "<tr>\n" +
+                    //         "        <td>"+re.results[i]+"</td>\n" +
+                    //         "        <td>"+re.results[i+1]+"</td>\n" +
+                    //         "        <td>"+re.results[i+2]+"</td>\n" +
+                    //         "        <td>"+re.results[i+3]+"</td>\n" +
+                    //         "        <td>"+re.results[i+4]+"</td>\n" +
+                    //         "        <td>"+re.results[i+5]+"</td>\n" +
+                    //         "        <td>"+re.results[i+6]+"</td>\n" +
+                    //         "     </tr>";
+                    //     $("#results").append(nr);
+                    // }
                 }else{
                     alert("服务器内部错误");
                 }
