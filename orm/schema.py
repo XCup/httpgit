@@ -39,8 +39,10 @@ class SelectHandler(tornado.web.RequestHandler):
         self.set_header("Access-Control-Allow-Headers", "x-requested-with")
         self.set_header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
     def get(self):
-        self.write("hello")
+        self.write()
     def post(self, *args, **kwargs):
+
+
         db = pymysql.connect ('www.000room.com', 'bm', 'bm!@#123', 'dev', charset='utf8')        # 打开数据库连接
         cursor = db.cursor ()# 使用cursor()方法获取操作游标
         sql = "SELECT COLUMN_NAME 列名,COLUMN_TYPE 数据类型,DATA_TYPE 字段类型,CHARACTER_MAXIMUM_LENGTH 长度,IS_NULLABLE 是否为空,COLUMN_DEFAULT 默认值,COLUMN_COMMENT 备注 FROM INFORMATION_SCHEMA.COLUMNS where table_name  = 'entity' "
@@ -54,6 +56,8 @@ class SelectHandler(tornado.web.RequestHandler):
         self.set_header ('Content-Type', 'application/json; charset=UTF-8')
         self.write (json.dumps ({ 'type': 1,'entity': results}))
         self.finish ()
+
+
 if __name__ == '__main__':
     app = tornado.web.Application ([
         ('/save', MainHandler),

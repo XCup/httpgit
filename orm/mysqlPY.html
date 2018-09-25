@@ -3,14 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>测试orm</title>
-    <script src="../jquery-3.3.1.min.js"></script>
     <script src="../jquery-3.3.1.js"></script>
+    <script src="../jquery-3.3.1.min.js"></script>
 </head>
 <style>.inputdiv{display: inline-block; margin-right: 40px;}</style>
-
 <script type='text/javascript' src='http://s.dev.000room.com/js/jquery-2.1.1.min.js'></script>
 <script type="text/javascript">
-
 function addFieldInfo()
 {
     str = '<div>' +
@@ -43,22 +41,29 @@ function exec1(command) {
             <a href="javascript:addFieldInfo();" >添加字段</a>
         </form>
     </center>
-    <form action = http://localhost:8887/read method="post" id="readList">
-        <input type="submit" id="read" value="读取列表">
-    </form>
-    <table id="filename" border="1">
-        <tr>
-            <td></td>
-            <td></td>
-        </tr>
-    </table>
+    <center>
+        <form action = http://localhost:8887/read method="post" id="readList">
+            <input type="submit" id="read" value="读取列表">
+        </form>
+        <table id="results" border="1">
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <rd></rd>
+            </tr>
+        </table>
+    </center>
 
 <script>
     $(document).ready(function(){
-  $("read").click(function(){
-    $("p").hide();
-  });
-});
+      $("read").click(function(){
+        $("p").hide();
+      });
+    });
     $(document).ready(function () {
         $("#ormForm").submit(function(){
                 submitrate();//提交登录信息
@@ -67,28 +72,30 @@ function exec1(command) {
     });
   function submitrate() {
         $.ajax({
-            url: "http://localhost:8889/read",
+            url: "http://localhost:8887/read",
             type: "POST",
             processData: false,
             dataType: "json",
             async: true,
-            data: $("#formpush").serialize(),
+            data: $("#ormForm").serialize(),
             success: function (re) {
                 var type=re.type;
-                if(type==0){
-                    alert("push成功！");
-                    alert(re.filename);
-                    for(var i=0;i<re.filename.length-1;i=i+2){
+                if(type==1){
+                    alert("read成功！");
+                    alert(re.results);
+                    for(var i=0;i<re.results.length;i=i+7){
                         var nr = "<tr>\n" +
-                            "        <td>"+re.filename[i]+"</td>\n" +
-                            "        <td>"+re.filename[i+1]+"</td>\n" +
+                            "        <td>"+re.results[i]+"</td>\n" +
+                            "        <td>"+re.results[i+1]+"</td>\n" +
+                            "        <td>"+re.results[i+2]+"</td>\n" +
+                            "        <td>"+re.results[i+3]+"</td>\n" +
+                            "        <td>"+re.results[i+4]+"</td>\n" +
+                            "        <td>"+re.results[i+5]+"</td>\n" +
+                            "        <td>"+re.results[i+6]+"</td>\n" +
                             "     </tr>";
-                        $("#filename").append(nr);
+                        $("#results").append(nr);
                     }
-                }else if(type==1){
-                    alert("成功");
-                }
-                else{
+                }else{
                     alert("服务器内部错误");
                 }
             },
