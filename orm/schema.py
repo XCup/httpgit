@@ -41,8 +41,7 @@ class SelectHandler(tornado.web.RequestHandler):
     def get(self):
         self.write()
     def post(self, *args, **kwargs):
-
-
+        listname = self.get_argument('readlist')
         db = pymysql.connect ('www.000room.com', 'bm', 'bm!@#123', 'dev', charset='utf8')        # 打开数据库连接
         cursor = db.cursor ()# 使用cursor()方法获取操作游标
         sql = "SELECT COLUMN_NAME 列名,COLUMN_TYPE 数据类型,DATA_TYPE 字段类型,CHARACTER_MAXIMUM_LENGTH 长度,IS_NULLABLE 是否为空,COLUMN_DEFAULT 默认值,COLUMN_COMMENT 备注 FROM INFORMATION_SCHEMA.COLUMNS where table_name  = 'entity' "
