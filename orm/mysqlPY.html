@@ -42,9 +42,10 @@ function exec1(command) {
         </form>
     </center>
     <center>
-        <form action = http://localhost:8887/read method="post" id="readList">
-            <!--请输入表名<input type="text" name="readlist">-->
-            <input type="submit" id="read" value="读取列表">
+        <form id="readList" action = http://localhost:8887/read method="post" >
+            <!--请输入表名<input type="text" placeholder="entity" >-->
+            <input type="submit" value="读取列表">
+            <p></p>
         </form>
         <table id="results" border="1">
             <tr>
@@ -58,13 +59,17 @@ function exec1(command) {
             </tr>
         </table>
     </center>
+        <form id="TxtList" action="http://localhost:8887/creat" method="post">
+            请输入表名<input type="text" name="listname">
+            <input type="submit" value="创建文件">
+        </form>
 <!--ffafas-->
 <script>
-    $(document).ready(function(){
-      $("read").click(function(){
-        $("p").hide();
-      });
-    });
+    // $(document).ready(function(){
+    //   $("read").click(function(){
+    //     $("p").hide();
+    //   });
+    // });
     $(document).ready(function () {
         $("#readList").submit(function(){
                 submitrate();//提交登录信息

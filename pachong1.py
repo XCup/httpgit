@@ -3,7 +3,7 @@ import tornado.web
 import tornado.ioloop
 import demjson
 import pymysql
-class MainHandler(tornado.web.RequestHandler):
+class mainHandler(tornado.web.RequestHandler):
     def get(self):
         self.write()
     def post(self, *args, **kwargs):
@@ -11,7 +11,7 @@ class MainHandler(tornado.web.RequestHandler):
         print(time)
 if __name__ == '__main__':
     app = tornado.web.Application ([
-        ('/save', MainHandler)
+        ('/save', mainHandler)
     ])
     app.listen (8884)
     tornado.ioloop.IOLoop.instance ().start ()

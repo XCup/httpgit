@@ -15,12 +15,13 @@ contents = []
 print('/n输入每行文本，以#结束')
 while True :
     entry = input('> ')
-    if entry == '.':
+    if entry == '#':
         break
     else:
         contents.append(entry)
     #写入文件  
+    print(entry)
     fobj = open(filename, 'w')
     fobj.writelines(['%s%s'%(eachline,os.linesep)for eachline in contents])
     fobj.close()
-    print('Done!')
+    # print('Done!')

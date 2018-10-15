@@ -64,3 +64,4 @@ if __name__ == '__main__':
     main()
 
 
+'"SELECT COLUMN_NAME 列名,COLUMN_TYPE 数据类型,COLUMN_DEFAULT 默认值,COLUMN_COMMENT 备注 FROM INFORMATION_SCHEMA.COLUMNS where table_name  =  %s " +listnames+ " %s"'

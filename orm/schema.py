@@ -3,12 +3,13 @@ import tornado.web
 import tornado.ioloop
 import demjson
 import pymysql
+import os
 import mysqlPy,asyncio
 import simplejson as json
 from models import entity
 class MainHandler(tornado.web.RequestHandler):
     def get(self, *args, **kwargs):
-        self.write("hello")
+        self.write()
     def post(self, *args, **kwargs):
         message=self.get_argument('commit')
         data1 = self.get_argument('name[]')
@@ -35,20 +36,23 @@ class MainHandler(tornado.web.RequestHandler):
 class SelectHandler(tornado.web.RequestHandler):
     def set_default_headers(self):
         print("setting headers!!!")
-        self.set_header("Access-Control-Allow-Origin", "*") # 这个地方可以写域名123
+        self.set_header("Access-Control-Allow-Origin", "*") # 这个地方可以写域名
         self.set_header("Access-Control-Allow-Headers", "x-requested-with")
         self.set_header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
-    def get(self):
+    def get(self, *args, **kwargs):
         self.write()
     def post(self, *args, **kwargs):
-        listname = self.get_argument('readlist')
+
+
         db = pymysql.connect ('www.000room.com', 'bm', 'bm!@#123', 'dev', charset='utf8')        # 打开数据库连接
         cursor = db.cursor ()# 使用cursor()方法获取操作游标
-        sql = "SELECT COLUMN_NAME 列名,COLUMN_TYPE 数据类型,DATA_TYPE 字段类型,CHARACTER_MAXIMUM_LENGTH 长度,IS_NULLABLE 是否为空,COLUMN_DEFAULT 默认值,COLUMN_COMMENT 备注 FROM INFORMATION_SCHEMA.COLUMNS where table_name  = 'entity' "
+        sql = "SELECT COLUMN_NAME 列名,COLUMN_TYPE 数据类型,DATA_TYPE 字段类型,CHARACTER_MAXIMUM_LENGTH 长度,IS_NULLABLE 是否为空,COLUMN_DEFAULT 默认值,COLUMN_COMMENT 备注 FROM INFORMATION_SCHEMA.COLUMNS where table_name  = 'entity'"
+
         try:
             cursor.execute(sql)            # 执行SQL语句
             results = cursor.fetchall()          # 获取所有记录列表
             print (results)
+
         except:
             print ("Error: unable to fetch data")
         db.close ()        # 关闭数据库连接
@@ -56,11 +60,51 @@ class SelectHandler(tornado.web.RequestHandler):
         self.write (json.dumps ({ 'type': 1,'entity': results}))
         self.finish ()
 
+class creatTxtHandler(tornado.web.RequestHandler):
+    def get(self, *args, **kwargs):
+        self.write('hallo')
+    def post(self, *args, **kwargs):
+        listnames = self.get_argument('listname')
+        print(listnames)
+
+        db = pymysql.connect ('www.000room.com', 'bm', 'bm!@#123', 'dev', charset='utf8')        # 打开数据库连接
+        cursor = db.cursor ()# 使用cursor()方法获取操作游标
+        sql = "SELECT COLUMN_NAME 列名,COLUMN_TYPE 数据类型,DATA_TYPE 字段类型,CHARACTER_MAXIMUM_LENGTH 长度,IS_NULLABLE 是否为空,COLUMN_DEFAULT 默认值,COLUMN_COMMENT 备注 FROM INFORMATION_SCHEMA.COLUMNS where table_name  = '%s'" % listnames
+
+        try:
+            cursor.execute(sql)         # 执行SQL语句
+            results = cursor.fetchall()          # 获取所有记录列表
+            print (results)
+
+
+        except:
+            print ("Error: unable to fetch data")
+        db.close ()        # 关闭数据库连接
+        print(results)
+        print(type(results))
+        strresults = list(results) + ['#']
+        print(type(strresults))
+        print(strresults)
+        while True:
+            TxtFilename = listnames
+            if os.path.exists (TxtFilename):
+                print ('ERROR: %s already exists') % TxtFilename
+            else:
+                break
+
+        while True:
+
+
+            fobj = open (TxtFilename, 'w')
+            fobj.writelines (['%s%s' % (eachline, os.linesep) for eachline in strresults])
+            fobj.close ()
+
 
 if __name__ == '__main__':
     app = tornado.web.Application ([
         ('/save', MainHandler),
-        ('/read',SelectHandler)
+        ('/read',SelectHandler),
+        ('/creat',creatTxtHandler)
     ])
     app.listen (8887)
     tornado.ioloop.IOLoop.instance ().start ()
