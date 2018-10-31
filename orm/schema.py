@@ -82,7 +82,7 @@ class creatTxtHandler(tornado.web.RequestHandler):
         db.close ()        # 关闭数据库连接
         print(results)
         print(type(results))
-        strresults = list(results) + ['#']
+        strresults = list(results)
         print(type(strresults))
         print(strresults)
         while True:

@@ -20,7 +20,7 @@ while True :
     else:
         contents.append(entry)
     #写入文件  
-    print(entry)
+    # print('enene')
     fobj = open(filename, 'w')
     fobj.writelines(['%s%s'%(eachline,os.linesep)for eachline in contents])
     fobj.close()
