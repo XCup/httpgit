@@ -5,6 +5,7 @@ import time
 import hashlib
 import uuid
 import math
+import BmBase
 
 def curlmd5(src):
     m = hashlib.md5()
@@ -251,7 +252,7 @@ class BmEntity:
 
 		fields = self.getProperty(True)
 		selectField = {}
-		for property1 in fields:
+		for name,property1 in fields:
 			if (property1.selectField == None):
 				continue
 			fields[name].value = property1.dbValue
@@ -286,7 +287,7 @@ class BmEntity:
 
 	def select(self):
 		json = self._callDBSource('SELECT').msg
-		self.formJson(json)
+		self.fromJson(json)
 		return self
 
 
@@ -343,7 +344,7 @@ class BmEntity:
 
 
 
-	def formJson(self,json,obj = None):
+	def fromJson(self,json,obj = None):
 		# /**
 		# * @desc 整理json
 		# * 
@@ -361,7 +362,7 @@ class BmEntity:
 		if(len(self._list) == 1):
 			properties = obj.getProperty()
 			obj = self._list[0]
-			for property1 in properties:
+			for name,property1 in properties:
 				self.name = obj.name
 		return self
 
@@ -383,13 +384,13 @@ class BmEntity:
 		if(type(json) != 'array'):
 			json = [json]
 
-		for property1 in properties:
+		for name,property1 in properties:
 			if (not property1.selectField or getattr(property1,'__name__') != 'bm\\BmField\\BMForeignKey'):
 				continue
-			data = list(set(find(json,name)))
+			data = list(set(json.get(name)))
 			foreignKeys[name] = data
 
-		for indexs in foreignKeys:
+		for name,indexs in foreignKeys:
 			entity = properties[name].entity
 			fields = properties[name].fields
 
@@ -400,21 +401,21 @@ class BmEntity:
 		ret = {}
 		for obj in json:
 			arrData = class1()
-			for property1 in properties:
+			for name,property1 in properties:
 				if(object.name == ''):
 					value = object.name1
 				if (getattr(property1,'__name__') == 'bm\\BmF	ield\\BMForeignKey'):
 					value = foreignKeys[name] if(foreignKeys[value] == '') else None
 				arrData.name = property1.dbValue2Value(value)
-			ret[] = arrData
+			ret = arrData
 		return ret
 
-	def settingSpace_obj(self,ids,obj):
-		ids = globals[ids]
+	def func(self,obj):
+		global ids
 		IndexField = obj.getIndexField()
 		obj.IndexField.In(ids)
 
-	def getByIds(self,object,ids,fields):
+	def getByIds(self,object,ids ,fields,obj):
 		# /**
 		# * @desc 根据ids查询
 		# * 
@@ -424,19 +425,23 @@ class BmEntity:
 		# * 
 		# * @return object
 		# */
-		object.setSelectFields(fields)	
-		globals[ids] = ids
-		res = object.settingSpace(settingSpace_obj).select().getData()
+		object.setSelectFields(fields)
+		res = object.settingSpace(self.func(obj)).select().getData()
 
-		del globals[ids]
+		del ids
 		ret = {}
 		for obj in res:
 			ret[obj.id] = obj
 		return ret
 
 
+	def func1(obj):
+		global names
+		properties = obj.getProperty
+		for property1,name in properties:
+			obj.name.selectField = True if(name in names) else False
 
-	def setSelectFields(self,names = None):
+	def setSelectFields(self,obj,names = None):
 		# /**
 		# * @desc 根据ids查询
 		# * 
@@ -449,15 +454,10 @@ class BmEntity:
 		properties = self.getProperty()
 		n = len(properties)
 		num_properties = range(0,n)
-		dictproperties = dict(zip(num_properties,properties))
-		globals[names] = dictproperties if (names == None) else names
-		def obj():
-			passdef(obj):
-			names = globals[names]
-			properties = self.getProperty()
-			for property1 in properties:
-				obj.name1.selectField =True if(find(name1,names)) else False
-		del globals[names]
+		dict_properties = dict(zip(num_properties,properties))
+		names = dict_properties if (names == None) else names
+		self.settingSpace(self.func1(obj))
+		del names
 
 
 	def toJson(self):
@@ -499,13 +499,13 @@ class BmEntity:
 		#  * 
 		#  * @return array
 		#  */
-		protocol_x = str1[0:str1.find('://')]
-		protocol = protocol_x.upper
-		str1 = str1[str1.find('://')+3:len(str1)] 
-		p_aplit = str1.aplit('@')
+		protocol_x = str1[0:str1.index('://')]
+		protocol = protocol_x.capitalize()
+		str1 = str1[str1.index('://')+3:len(str1)] 
+		p_split = str1.split('@')
 		n = len(str1)
 		num = range(0,n)
-		p = dict(zip(num,p_aplit))
+		p = dict(zip(num,p_split))
 		if(len(p)>3):
 			p2 = p[len(p) - 1]
 			p1 = p[len(p) - 2]
@@ -516,15 +516,15 @@ class BmEntity:
 			strArray[2] = p2
 		else:
 			strArray = p
-		u_aplit = strArray[0].aplit(':') 
+		u_split = strArray[0].split(':') 
 		n = len(strArray)
 		num = range(0,n)
-		u = dict(zip(num,u_aplit))
+		u = dict(zip(num,u_split))
 
-		dl_aplit = strArray[2].aplit(':')
+		dl_split = strArray[2].split(':')
 		n = len(strArray[2])
 		num = range(0,n)
-		dl = dict(zip(num,dl_aplit))
+		dl = dict(zip(num,dl_split))
 
 		return{
 			'protocol' : protocol,
@@ -550,7 +550,7 @@ class BmEntity:
 		# propertys = class1.getProperties()
 		# array = ['bm\\BmField\\BMPrimaryKey', 'bm\\BmField\\BMForeignKey', 'bm\\BmField\\BMString', 'bm\\BmField\\BMInt', 'bm\\BmField\\BMFloat', 'bm\\BmField\\BMMoney', 'bm\\BmField\\BMTime', 'bm\\BmField\\BMText', 'bm\\BmField\\BMEnum']
 		# self._fields = {}
-		# for v in propertys:
+		# for k,v in propertys:
 		# 	pro = class1.getProperty(v.name)
 		# 	propertyObj = pro.getValue(self)
 
@@ -574,12 +574,12 @@ class BmEntity:
 		# */
 
 		class1 = getattr(self,'__name__')
-		classArr_aplit = class1.aplit('\\')
+		classArr_split = class1.split('\\')
 		n = len(class1)
 		num = range(0,n)
-		classArr = dict(zip(num,classArr_aplit))
+		classArr = dict(zip(num,classArr_split))
 		namespace = classArr[0] if (classArr != None) else ''
-		db = BmBase.getConfig('{namespace}.db')
+		db = BmBase.getConfig('%s.db') %namespace
 		if(db != ''):
 			db = BmBase.getConfig('db')
 
@@ -603,12 +603,12 @@ class BmEntity:
 
 		if(type(info) == 'array'):
 			ret = {}
-			for value in info:
-				ret.key = self._object2Json(value)
+			for key,value in info:
+				ret[key] = self._object2Json(value)
 			return ret
 
 		if (type(info) == 'object'):
-			ret = stdclass()
+			ret = {}
 			names_key = info.getProperty()
 			n = len(info.getProperty)
 			num = range(0,n)
@@ -620,4 +620,4 @@ class BmEntity:
 
 
 
-#getValue 什么意思     425 php464 函数中的大括号什么意思
+#getValue 什么意思   

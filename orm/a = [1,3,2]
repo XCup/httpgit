@@ -1,3 +1,0 @@
-b = ['a','b','c']
-a = 'asdada1 ' + ','.join(b)
-print(a)
